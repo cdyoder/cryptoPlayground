@@ -1,0 +1,39 @@
+name: crypto
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - ca-certificates=2020.10.14=0
+  - intel-openmp=2020.2=254
+  - libblas=3.9.0=11_win64_mkl
+  - libcblas=3.9.0=11_win64_mkl
+  - liblapack=3.9.0=11_win64_mkl
+  - mkl=2021.3.0=hb70f87d_564
+  - numpy=1.21.2=py39h6635163_0
+  - openssl=1.1.1l=h8ffe710_0
+  - pip=21.2.4=pyhd8ed1ab_0
+  - python=3.9.7=h7840368_0_cpython
+  - python_abi=3.9=2_cp39
+  - setuptools=58.0.4=py39hcbf5309_0
+  - sqlite=3.36.0=h8ffe710_1
+  - tbb=2021.3.0=h2d74725_0
+  - tzdata=2021a=he74cb21_1
+  - ucrt=10.0.20348.0=h57928b3_0
+  - vc=14.2=hb210afc_5
+  - vs2015_runtime=14.29.30037=h902a5da_5
+  - wheel=0.37.0=pyhd8ed1ab_1
+  - pip:
+    - cbpro==1.1.4
+    - certifi==2021.5.30
+    - charset-normalizer==2.0.4
+    - coinbase==2.1.0
+    - idna==3.2
+    - pycryptodome==3.10.1
+    - pymongo==3.5.1
+    - requests==2.13.0
+    - six==1.10.0
+    - sortedcontainers==2.4.0
+    - urllib3==1.26.6
+    - websocket-client==0.40.0
+prefix: C:\Users\Christopher D. Yoder\Anaconda3\envs\crypto
