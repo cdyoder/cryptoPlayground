@@ -11,12 +11,19 @@
 # for install, had to pip install pymongo before pip install cbpro
 # https://orangeable.com/server/linux-crontab
 # https://stackoverflow.com/questions/36365801/run-a-crontab-job-using-an-anaconda-env
+#
+
+# directory structure
+# /main
+#	| -> YYYY-MM-coin
+# 		| -> Coin file
 
 # goal: to tabulate the stats every day of various coins in USD for testing algorithms on later
 #
 # rev table
 # rev0 
 # rev1 	CDY 	11/03/2021 	Added month parsing to limit total file size
+# rev2 	CDY 	12/19/2021 	Prepped for 5-minute, added delay for trends pull
 
 
 import pdb
@@ -90,6 +97,9 @@ logdir = 'logdir'
 
 # log file since cron doesn't seem to do it
 coinlist.sort()
+# pdb.set_trace()
+if not os.path.exists(os.path.join(os.getcwd(), logdir)):
+	os.mkdir(os.path.join(os.getcwd(), logdir))
 activity_log = os.path.join(os.getcwd(), logdir, yearmonth + 'test-pro-output.log')
 if not os.path.join(activity_log):
 	logfid = open(activity_log, 'w')
@@ -151,5 +161,26 @@ for i1 in range(len(coinlist)):
 logfid.write('\n')
 logfid.close()
 
-# get trends
-gt.GetTrends()
+# get trends from Google, do this every hour 
+delaytime = 1*3600
+trendstime = 'trendclock.txt'
+datetimeformat = "%Y-%m-%d %H:%M:%S"
+# pdb.set_trace()
+if not os.path.exists(trendstime):
+	tfid = open(trendstime, 'w')
+	tfid.write((nowdate - dt.timedelta(seconds=delaytime + 1)).strftime(datetimeformat))
+	tfid.close()
+# read in see time 
+# pdb.set_trace()
+tfid = open(trendstime, 'r')
+a1 = tfid.readline()
+timelast = dt.datetime.strptime(a1, datetimeformat)
+tfid.close()
+nowdatehour = nowdate - dt.timedelta(minutes=nowdate.minute, seconds=nowdate.second)
+if (nowdate - nowdatehour).total_seconds() < 11*60:
+	if (nowdate - timelast).total_seconds() > delaytime:
+		gt.GetTrends()
+		# update file, reset 
+		tfid = open(trendstime, 'w')
+		tfid.write(nowdate.strftime(datetimeformat))
+		tfid.close()
